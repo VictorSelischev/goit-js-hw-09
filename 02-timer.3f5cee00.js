@@ -1,2 +1,0 @@
-const e=document.querySelector(".timer"),l=document.querySelectorAll(".field"),t=document.querySelectorAll(".value"),o=document.querySelectorAll(".label");e.style.display="flex",e.style.marginTop="40px",l.forEach((e=>{e.style.display="flex",e.style.flexDirection="column",e.style.alignItems="center",e.style.marginRight="20px"})),t.forEach((e=>{e.style.fontSize="50px",e.style.fontFamily="Roboto, sans-serif"})),o.forEach((e=>{e.style.textTransform="uppercase",e.style.fontSize="16px",e.style.fontFamily="Roboto, sans-serif"}));
-//# sourceMappingURL=02-timer.3f5cee00.js.map
