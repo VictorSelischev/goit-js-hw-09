@@ -101,8 +101,14 @@ function TimerClock() {
   const differentTime = selectedTime - Date.now();
   const { days, hours, minutes, seconds } = convertMs(differentTime);
   
-  refs.timerDays.textContent = days;
-  refs.timerHours.textContent = hours;
-  refs.timerMinutes.textContent = minutes;
-  refs.timerSeconds.textContent = seconds;
+  refs.timerDays.textContent = addLeadingZero(days);
+  refs.timerHours.textContent = addLeadingZero(hours);
+  refs.timerMinutes.textContent = addLeadingZero(minutes);
+  refs.timerSeconds.textContent = addLeadingZero(seconds);
 }
+
+function addLeadingZero(value) {
+  return value.toString().padStart(2, '0');
+}
+
+
