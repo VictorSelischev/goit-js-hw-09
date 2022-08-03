@@ -1,34 +1,46 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-inlineStyleTimer();
-
-let differentTime = null;
-
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (new Date() >= selectedDates[0]) {
+    if (Date.now() >= selectedDates[0]) {
       dataButton.disabled = true;
       window.alert('Please choose a date in the future');
       return;
     }
 
-    dataButton.disabled = false;
-    differentTime = selectedDates[0].getTime() - Date.now();
-    
-    dataButton.addEventListener('click', handleShowClockClick);
+    refs.dataButton.disabled = false;
+    refs.dataButton.addEventListener('click', handleShowClockClick);
+
+    selectedTime = selectedDates[0];
   },
 };
 
-const dateTimePicker = document.querySelector('#datetime-picker');
-const dataButton = document.querySelector('button[data-start]');
-dataButton.disabled = true;
+const refs = {
+  timerDays: document.querySelector('[data-days]'),
+  timerHours: document.querySelector('[data-hours]'),
+  timerMinutes: document.querySelector('[data-minutes]'),
+  timerSeconds: document.querySelector('[data-seconds]'),
 
-flatpickr(dateTimePicker, options);
+  dateTimePicker: document.querySelector('#datetime-picker'),
+  dataButton: document.querySelector('button[data-start]'),
+}
+
+refs.dataButton.disabled = true;
+
+inlineStyleTimer();
+
+let selectedTime = null;
+
+flatpickr(refs.dateTimePicker, options);
+
+
+
+
 
 // =========================================
 // FUNCTION
@@ -82,15 +94,15 @@ function convertMs(ms) {
 
 function handleShowClockClick() {
   
-  setInterval(convertMs(differentTime), 1000);
+  setInterval(TimerClock, 1000);
+}
 
-  const timerDays = document.querySelector('[data-days]');
-  const timerHours = document.querySelector('[data-hours]');
-  const timerMinutes = document.querySelector('[data-minutes]');
-  const timerSeconds = document.querySelector('[data-seconds]');
-
-  // timerDays.textContent = timeClock.days;
-  // timerHours.textContent = timeClock.hours;
-  // timerMinutes.textContent = timeClock.minutes;
-  // timerSeconds.textContent = timeClock.seconds;
+function TimerClock() {
+  const differentTime = selectedTime - Date.now();
+  const { days, hours, minutes, seconds } = convertMs(differentTime);
+  
+  refs.timerDays.textContent = days;
+  refs.timerHours.textContent = hours;
+  refs.timerMinutes.textContent = minutes;
+  refs.timerSeconds.textContent = seconds;
 }
