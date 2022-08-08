@@ -10,7 +10,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (Date.now() >= selectedDates[0]) {
-      dataButton.disabled = true;
+      refs.dataButton.disabled = true;
       Notiflix.Notify.failure('Please choose a date in the future');
       return;
     }
