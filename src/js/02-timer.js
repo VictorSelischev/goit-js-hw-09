@@ -37,6 +37,7 @@ refs.dataButton.disabled = true;
 inlineStyleTimer();
 
 let selectedTime = null;
+let intervalId = null;
 
 flatpickr(refs.dateTimePicker, options);
 
@@ -96,11 +97,17 @@ function convertMs(ms) {
 
 function handleShowClockClick() {
   
-  setInterval(TimerClock, 1000);
+  intervalId = setInterval(TimerClock, 1000);
 }
 
 function TimerClock() {
   const differentTime = selectedTime - Date.now();
+
+  if (differentTime <= 0) {
+    clearInterval(intervalId);
+    return;
+  }
+
   const { days, hours, minutes, seconds } = convertMs(differentTime);
   
   refs.timerDays.textContent = addLeadingZero(days);
